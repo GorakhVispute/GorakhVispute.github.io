@@ -3,26 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+
 <title>GDV Bioinformatics Lab</title>
 
+<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<!-- Mol* Viewer -->
-<section id="visual">
-<h2>Protein Structure Viewer</h2>
-
-<div id="viewer" style="width:100%; height:500px; border-radius:12px;"></div>
-
-<br>
-
-<input type="text" id="pdbInput" placeholder="Enter PDB ID (e.g. 3QTS)" />
-<button onclick="loadProtein()">Load Protein</button>
-
-</section>
-
-<!-- LinkedIn Script -->
-<script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
 
 <style>
 body { margin:0; font-family:'Inter',sans-serif; background:#0b1020; color:#e6edf3; }
@@ -33,7 +19,8 @@ section { max-width:1100px; margin:auto; padding:40px 20px; }
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
 .card { background:#111827; padding:20px; border-radius:12px; }
 footer { text-align:center; padding:20px; background:#020617; }
-.btn { background:#38bdf8; color:#000; padding:8px 12px; text-decoration:none; border-radius:6px; display:inline-block; margin-top:10px; }
+.btn { background:#38bdf8; color:#000; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; margin-left:5px; }
+input { padding:8px; border-radius:6px; border:none; width:250px; }
 </style>
 </head>
 
@@ -45,70 +32,22 @@ footer { text-align:center; padding:20px; background:#020617; }
 </header>
 
 <nav>
-<a href="#research">Research</a>
-<a href="#github">GitHub</a>
 <a href="#visual">Structure Viewer</a>
-<a href="#team">Lab Members</a>
-<a href="#contact">Contact</a>
 </nav>
-
-<section id="research">
-<h2>Research Work</h2>
-<div class="grid">
-
-<div class="card">
-<h3>Insilico analysis of AHI1 and NPHP1 genes</h3>
-<p><b>Tools:</b> AutoDock Vina, PyMOL</p>
-<p><b>Binding Energy:</b> -8.1 kcal/mol</p>
-<p><b>PDB:</b> 3QTS</p>
-</div>
-
-<div class="card">
-<h3>Phytochemicals as IL-5 receptor inhibitors</h3>
-<p><b>Ligands:</b> Curcumin, Piperlongumine, Vasicine</p>
-<p><b>Top Scores:</b> -7.067, -7.175, -6.376 kcal/mol</p>
-</div>
-
-</div>
-</section>
-
-<section id="github">
-<h2>Selected GitHub Projects</h2>
-<div id="repo-container" class="grid"></div>
-</section>
 
 <section id="visual">
 <h2>Protein Structure Viewer</h2>
+
 <div id="viewer" style="width:100%; height:500px; border-radius:12px;"></div>
-</section>
 
-<section id="team">
-<h2>Lab Members</h2>
-<div class="grid">
-<div class="card">
-<h3>Gorakh D. Vispute</h3>
-<p>Bioinformatician</p>
-</div>
-</div>
-</section>
+<br><br>
 
-<section id="contact">
-<h2>Contact</h2>
-<a class="btn" href="mailto:gorakhvispute@email.com">Email Me</a>
-<a class="btn" href="https://www.linkedin.com/in/gorakhvispute" target="_blank">LinkedIn</a>
+<input type="text" id="inputBox" placeholder="Enter PDB ID (3QTS) or UniProt ID (P69905)" />
+<button class="btn" onclick="loadStructure()">Load</button>
 
-<!-- LinkedIn Badge (moved here) -->
-<div class="badge-base LI-profile-badge"
-data-locale="en_US"
-data-size="medium"
-data-theme="light"
-data-type="VERTICAL"
-data-vanity="gorakhvispute230702">
-<a class="badge-base__link LI-simple-link"
-href="https://in.linkedin.com/in/gorakhvispute230702">
-Gorakh Vispute
-</a>
-</div>
+<p style="font-size:13px; opacity:0.7;">
+Tip: Use PDB ID or UniProt ID (for AlphaFold prediction)
+</p>
 
 </section>
 
@@ -117,53 +56,60 @@ Gorakh Vispute
 </footer>
 
 <script>
-// GitHub Projects
-const username = "GorakhVispute";
-fetch(`https://api.github.com/users/${username}/repos`)
-.then(res => res.json())
-.then(data => {
-  const bioRepos = data.filter(r => r.description && r.description.toLowerCase().includes("bio"));
-  bioRepos.slice(0,3).forEach(repo => {
-    const div = document.createElement("div");
-    div.className = "card";
-    div.innerHTML = `
-      <h3>${repo.name}</h3>
-      <p>${repo.description}</p>
-      <a class='btn' href='${repo.html_url}' target='_blank'>View</a>
-    `;
-    document.getElementById("repo-container").appendChild(div);
-  });
-});
-
-// ✅ Mol* Viewer (FIXED)
-<script>
 let viewer = $3Dmol.createViewer("viewer", {
     backgroundColor: "white"
 });
 
-function loadProtein() {
-    let pdbId = document.getElementById("pdbInput").value || "3QTS";
+// Detect input type
+function isPDB(id) {
+    return id.length === 4;
+}
+
+function isUniProt(id) {
+    return id.length >= 6;
+}
+
+function loadStructure() {
+    let input = document.getElementById("inputBox").value.trim();
+
+    if (!input) input = "3QTS";
 
     viewer.clear();
 
-    $3Dmol.download("pdb:" + pdbId, viewer, {}, function() {
+    // 🔹 Case 1: PDB ID
+    if (isPDB(input)) {
 
-        // Cartoon structure
-        viewer.setStyle({}, {cartoon: {color: 'spectrum'}});
+        $3Dmol.download("pdb:" + input, viewer, {}, function() {
 
-        // Highlight ligand (hetero atoms)
-        viewer.setStyle({hetflag:true}, {stick: {colorscheme: "greenCarbon"}});
+            viewer.setStyle({}, {cartoon: {color: 'spectrum'}});
+            viewer.setStyle({hetflag:true}, {stick: {colorscheme: "greenCarbon"}});
+            viewer.zoomTo();
+            viewer.render();
+        });
 
-        viewer.zoomTo();
-        viewer.render();
-    });
+    }
+
+    // 🔹 Case 2: UniProt → AlphaFold
+    else if (isUniProt(input)) {
+
+        let url = `https://alphafold.ebi.ac.uk/files/AF-${input}-F1-model_v4.pdb`;
+
+        viewer.addModelFromUrl(url, "pdb", function() {
+
+            viewer.setStyle({}, {cartoon: {color: 'confidence'}});
+            viewer.zoomTo();
+            viewer.render();
+        });
+
+    }
+
+    else {
+        alert("Invalid input. Use PDB ID or UniProt ID.");
+    }
 }
 
-// Load default protein on page load
-loadProtein();
-</script>
-
-initViewer();
+// Load default
+loadStructure();
 </script>
 
 </body>
