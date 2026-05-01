@@ -33,13 +33,12 @@ footer { text-align:center; padding:20px; background:#020617; }
 
 .btn { background:#38bdf8; color:#000; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; }
 
-/* 🔥 Centered Viewer Layout */
-.viewer-container {
+/* 🔥 TRUE CENTERED VIEWER FIX */
+.viewer-wrapper {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
 }
 
 #viewer {
@@ -49,16 +48,17 @@ footer { text-align:center; padding:20px; background:#020617; }
     border-radius: 12px;
 }
 
+/* Control panel centered below viewer */
 .control-panel {
     width: 80%;
     max-width: 400px;
     background: #111827;
     padding: 15px;
     border-radius: 12px;
+    margin: 20px auto 0 auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    align-items: center;
 }
 
 .control-panel input,
@@ -112,13 +112,13 @@ footer { text-align:center; padding:20px; background:#020617; }
 <div id="repo-container" class="grid"></div>
 </section>
 
-<!-- 🔥 SINGLE PROFESSIONAL VIEWER -->
+<!-- 🔥 SINGLE CENTERED VIEWER -->
 <section id="visual">
 <h2 style="text-align:center;">Protein Structure Viewer</h2>
 
-<div class="viewer-container">
-
-<div id="viewer"></div>
+<div class="viewer-wrapper">
+    <div id="viewer"></div>
+</div>
 
 <div class="control-panel">
 
@@ -144,7 +144,6 @@ footer { text-align:center; padding:20px; background:#020617; }
 
 </div>
 
-</div>
 </section>
 
 <section id="team">
@@ -199,8 +198,13 @@ fetch(`https://api.github.com/users/${username}/repos`)
   });
 });
 
-// 🔬 3D Viewer
-let viewer = $3Dmol.createViewer("viewer", { backgroundColor: "white" });
+// 3D Viewer
+let viewer = null;
+
+window.onload = function() {
+    viewer = $3Dmol.createViewer("viewer", { backgroundColor: "white" });
+    loadStructure();
+};
 
 // Load Structure
 function loadStructure() {
@@ -256,9 +260,6 @@ function highlightResidue() {
 function resetView() {
     loadStructure();
 }
-
-// Load default
-loadStructure();
 </script>
 
 </body>
