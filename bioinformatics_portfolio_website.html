@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vispute Bioinformatics Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/molstar/build/viewer/molstar.js"></script>
+<style>
+body { margin:0; font-family:'Inter',sans-serif; background:#0b1020; color:#e6edf3; }
+header { background:#020617; padding:30px; text-align:center; }
+nav { display:flex; justify-content:center; gap:20px; padding:10px; background:#020617; }
+nav a { color:#38bdf8; text-decoration:none; }
+section { max-width:1100px; margin:auto; padding:40px 20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+.card { background:#111827; padding:20px; border-radius:12px; }
+.tag { background:#1e293b; padding:4px 8px; margin:3px; display:inline-block; border-radius:6px; font-size:12px; }
+footer { text-align:center; padding:20px; background:#020617; }
+.btn { background:#38bdf8; color:#000; padding:8px 12px; text-decoration:none; border-radius:6px; display:inline-block; margin-top:10px; }
+</style>
+</head>
+<body>
+
+<header>
+<h1>Vispute Bioinformatics Lab</h1>
+<p>Computational Drug Discovery | Structural Biology | Genomics</p>
+</header>
+
+<nav>
+<a href="#research">Research</a>
+<a href="#github">GitHub</a>
+<a href="#visual">Structure Viewer</a>
+<a href="#team">Lab Members</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<section id="research">
+<h2>Research Work</h2>
+<div class="grid">
+<div class="card">
+<h3>Naegleria fowleri Drug Target</h3>
+<p><b>Tools:</b> AutoDock Vina, PyMOL</p>
+<p><b>Binding Energy:</b> -8.1 kcal/mol</p>
+<p><b>PDB:</b> 3QTS</p>
+</div>
+<div class="card">
+<h3>Phytochemicals vs IL-5</h3>
+<p><b>Tools:</b> AutoDock, ADMETlab</p>
+<p><b>Binding Energy:</b> -7.6 kcal/mol</p>
+<p><b>Ligand:</b> Curcumin</p>
+</div>
+</div>
+</section>
+
+<section id="github">
+<h2>Selected GitHub Projects</h2>
+<div id="repo-container" class="grid"></div>
+</section>
+
+<section id="visual">
+<h2>Protein Structure Viewer</h2>
+<div id="viewer" style="width:100%; height:400px;"></div>
+</section>
+
+<section id="team">
+<h2>Lab Members</h2>
+<div class="grid">
+<div class="card">
+<h3>Gorakh Vispute</h3>
+<p>Principal Investigator (Computational Bioinformatics)</p>
+</div>
+</div>
+</section>
+
+<section id="contact">
+<h2>Contact</h2>
+<p>Email: your.email@example.com</p>
+<p>LinkedIn: linkedin.com/in/yourprofile</p>
+</section>
+
+<footer>
+<p>© 2026 Vispute Bioinformatics Lab</p>
+</footer>
+
+<script>
+// GitHub Filtered Projects
+const username = "GorakhVispute";
+fetch(`https://api.github.com/users/${username}/repos`)
+.then(res => res.json())
+.then(data => {
+  const bioRepos = data.filter(r => r.description && r.description.toLowerCase().includes("bio"));
+  bioRepos.slice(0,3).forEach(repo => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `<h3>${repo.name}</h3><p>${repo.description}</p><a class='btn' href='${repo.html_url}' target='_blank'>View</a>`;
+    document.getElementById("repo-container").appendChild(div);
+  });
+});
+
+// Mol* Viewer
+const viewer = new molstar.Viewer('viewer', { layoutIsExpanded: false });
+viewer.loadPdb('3QTS');
+</script>
+
+</body>
+</html>
