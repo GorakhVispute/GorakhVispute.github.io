@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GDV Bioinformatics Solutions</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com" rel="stylesheet">
     <script src="https://unpkg.com/molstar/build/viewer/molstar.js"></script>
     <style>
         body { margin:0; font-family:'Inter',sans-serif; background:#0b1020; color:#e6edf3; line-height: 1.6; }
@@ -26,23 +26,29 @@
             filter: drop-shadow(0 0 10px #38bdf8); 
         }
 
-        /* Navigation - Scrollable on mobile */
+        /* Navigation - Centered & Responsive */
         nav { 
             display: flex; 
-            justify-content: center; 
+            justify-content: center; /* Centers links horizontally */
+            flex-wrap: wrap; /* Allows links to wrap if screen is very narrow */
             gap: 15px; 
             padding: 15px; 
             background:#020617; 
             position: sticky; 
             top: 0; 
             z-index: 100;
-            overflow-x: auto;
-            white-space: nowrap;
         }
-        nav a { color:#38bdf8; text-decoration:none; font-weight: 600; font-size: 14px; }
+        nav a { 
+            color:#38bdf8; 
+            text-decoration:none; 
+            font-weight: 600; 
+            font-size: 14px; 
+            padding: 5px 10px; 
+        }
 
         section { max-width:1100px; margin:auto; padding:40px 20px; }
         h1 { font-size: 2rem; margin: 10px 0; }
+        h2 { text-align: center; margin-bottom: 30px; } /* Centers all section headers */
         
         .grid { 
             display: grid; 
@@ -57,13 +63,14 @@
             border: 1px solid #1e293b;
         }
 
-        /* Mobile specific adjustments */
+        /* Mobile specific adjustments for Android */
         @media (max-width: 600px) {
             header { padding: 40px 15px; }
             .logo { width: 250px; }
             h1 { font-size: 1.5rem; }
             .grid { grid-template-columns: 1fr; }
-            nav { justify-content: flex-start; padding: 15px 10px; }
+            nav { gap: 10px; }
+            nav a { font-size: 13px; }
         }
 
         .btn { background:#38bdf8; color:#000; padding:10px 16px; text-decoration:none; border-radius:6px; display:inline-block; margin-top:10px; font-weight: bold; }
@@ -73,12 +80,12 @@
 <body>
 
 <header>
-    <!-- Centered Logo -->
     <img src="logo.png" alt="GDV Bioinformatics Logo" class="logo" />
     <h1>GDV Bioinformatics Solutions</h1>
     <p>AI Driven Drug Discovery | Structural Biology | Systems Biology | Genomics | Phylogeny Solutions</p>
 </header>
 
+<!-- Centered Navigation -->
 <nav>
     <a href="#research">Research</a>
     <a href="#github">GitHub</a>
@@ -122,7 +129,7 @@
 
 <section id="team">
     <h2>About Developer</h2>
-    <div class="card">
+    <div class="card" style="text-align: center;">
         <h3>Gorakh D. Vispute</h3>
         <p>Founder, Principal Investigator & Researcher (Bioinformatician)</p>
     </div>
@@ -130,7 +137,7 @@
 
 <section id="contact">
     <h2>Contact</h2>
-    <div class="card">
+    <div class="card" style="text-align: center;">
         <p><a href="mailto:gorakhvispute23@gmail.com" style="color:#38bdf8; text-decoration: none;">📧 gorakhvispute23@gmail.com</a></p>
         <p><a href="tel:+918237405732" style="color:#38bdf8; text-decoration: none;">📞 +91 82374 05732</a></p>
         <a href="https://www.linkedin.com/in/gorakhvispute230702" target="_blank" class="btn">LinkedIn Profile</a>
@@ -142,7 +149,6 @@
 </footer>
 
 <script>
-// GitHub API fetch
 const username = "GorakhVispute";
 fetch(`https://api.github.com/users/${username}/repos`)
     .then(res => res.json())
@@ -152,12 +158,12 @@ fetch(`https://api.github.com/users/${username}/repos`)
         bioRepos.slice(0,3).forEach(repo => {
             const div = document.createElement("div");
             div.className = "card";
+            div.style.textAlign = "center";
             div.innerHTML = `<h3>${repo.name}</h3><p>${repo.description}</p><a class='btn' href='${repo.html_url}' target='_blank'>View Project</a>`;
             container.appendChild(div);
         });
     });
 
-// Mol* Viewer initialization
 const viewer = new molstar.Viewer('viewer', { layoutIsExpanded: false });
 viewer.loadPdb('3QTS');
 </script>
