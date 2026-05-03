@@ -47,6 +47,43 @@ footer { text-align:center; padding:20px; background:#020617; }
     background: white;
     border-radius: 12px;
 }
+.main-header {
+    background: linear-gradient(135deg, #020617, #0b1020);
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* Logo styling */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 180px;
+    max-width: 90%;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(56,189,248,0.3);
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* Title styling */
+.main-header h1 {
+    font-size: 2.2rem;
+    margin: 10px 0;
+    color: #38bdf8;
+}
+
+.main-header p {
+    font-size: 1rem;
+    color: #9ca3af;
+}
 
 /* Control panel centered below viewer */
 .control-panel {
@@ -74,9 +111,15 @@ footer { text-align:center; padding:20px; background:#020617; }
 
 <body>
 
-<header>
-<h1>GDV Bioinformatics Lab</h1>
-<p>Computational Drug Discovery | Structural Biology | Genomics</p>
+<header class="main-header">
+
+    <div class="logo-container">
+        <img src="logo.png" alt="GDV Bioinformatics Logo" class="logo">
+    </div>
+
+    <h1>GDV Bioinformatics Lab</h1>
+    <p>Computational Drug Discovery | Structural Biology | Genomics</p>
+
 </header>
 
 <nav>
