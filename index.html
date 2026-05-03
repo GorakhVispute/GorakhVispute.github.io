@@ -2,75 +2,68 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <title>GDV Bioinformatics Lab</title>
 
+<!-- 3Dmol -->
 <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
 
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
+<!-- LinkedIn -->
+<script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+
 <style>
-body {
-    margin:0;
-    font-family:'Inter',sans-serif;
-    background:#0b1020;
-    color:#e6edf3;
+body { margin:0; font-family:'Inter',sans-serif; background:#0b1020; color:#e6edf3; }
+
+header { background:#020617; padding:30px; text-align:center; }
+
+nav { display:flex; justify-content:center; gap:20px; padding:10px; background:#020617; }
+nav a { color:#38bdf8; text-decoration:none; }
+
+section { max-width:1100px; margin:auto; padding:40px 20px; }
+
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+
+.card { background:#111827; padding:20px; border-radius:12px; }
+
+footer { text-align:center; padding:20px; background:#020617; }
+
+.btn { background:#38bdf8; color:#000; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; }
+
+/* 🔥 Viewer Layout */
+.viewer-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
 }
 
-/* HEADER */
-header {
-    text-align:center;
-    padding:30px;
-    background:#020617;
+#viewer {
+    width: 70%;
+    height: 500px;
+    background: white;
+    border-radius: 12px;
 }
 
-/* CENTER ENTIRE VIEWER SECTION */
-#visual {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    min-height:80vh;
-}
-
-/* TRUE CENTERED VIEWER */
-.viewer-box {
-    width:90%;
-    max-width:900px;
-    height:520px;
-    border-radius:14px;
-    overflow:hidden;
-    background:#ffffff;
-    box-shadow:0 10px 30px rgba(0,0,0,0.6);
-}
-
-/* CONTROLS */
 .control-panel {
-    margin-top:20px;
-    width:90%;
-    max-width:400px;
-    background:#111827;
-    padding:20px;
-    border-radius:12px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
+    width: 250px;
+    background: #111827;
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .control-panel input,
 .control-panel select,
 .control-panel button {
-    padding:10px;
-    border-radius:6px;
-    border:none;
-    width:100%;
-}
-
-.control-panel button {
-    background:#38bdf8;
-    font-weight:600;
-    cursor:pointer;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
 }
 </style>
 </head>
@@ -82,50 +75,130 @@ header {
 <p>Computational Drug Discovery | Structural Biology | Genomics</p>
 </header>
 
+<nav>
+<a href="#research">Research</a>
+<a href="#github">GitHub</a>
+<a href="#visual">Structure Viewer</a>
+<a href="#team">Lab Members</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<section id="research">
+<h2>Research Work</h2>
+<div class="grid">
+
+<div class="card">
+<h3>Insilico analysis of AHI1 and NPHP1 genes</h3>
+<p><b>Tools:</b> AutoDock Vina, PyMOL</p>
+<p><b>Binding Energy:</b> -8.1 kcal/mol</p>
+<p><b>PDB:</b> 3QTS</p>
+</div>
+
+<div class="card">
+<h3>Phytochemicals as IL-5 receptor inhibitors</h3>
+<p><b>Ligands:</b> Curcumin, Piperlongumine, Vasicine</p>
+<p><b>Top Scores:</b> -7.067, -7.175, -6.376 kcal/mol</p>
+</div>
+
+</div>
+</section>
+
+<section id="github">
+<h2>Selected GitHub Projects</h2>
+<div id="repo-container" class="grid"></div>
+</section>
+
+<!-- 🔥 PROFESSIONAL VIEWER -->
 <section id="visual">
+<h2 style="text-align:center;">Protein Structure Viewer</h2>
 
-<h2>Protein Structure Viewer</h2>
+<div class="viewer-container">
 
-<div id="viewer" class="viewer-box"></div>
+<div id="viewer"></div>
 
 <div class="control-panel">
-<input type="text" id="inputBox" placeholder="PDB (3QTS) or UniProt (P69905)">
-<button onclick="loadStructure()">Load Structure</button>
 
+<input type="text" id="inputBox" placeholder="PDB (3QTS) or UniProt (P69905)" />
+<button class="btn" onclick="loadStructure()">Load</button>
+
+<hr>
+
+<label>Display Style</label>
 <select onchange="changeStyle(this.value)">
 <option value="cartoon">Cartoon</option>
 <option value="stick">Stick</option>
 <option value="surface">Surface</option>
 </select>
 
-<input type="text" id="residueInput" placeholder="Residue number (e.g. 45)">
-<button onclick="highlightResidue()">Highlight Residue</button>
+<hr>
 
-<button onclick="resetView()">Reset</button>
+<label>Select Residue</label>
+<input type="text" id="residueInput" placeholder="e.g. 45" />
+<button class="btn" onclick="highlightResidue()">Highlight</button>
+
+<button class="btn" onclick="resetView()">Reset</button>
+
+</div>
+
+</div>
+</section>
+
+<section id="team">
+<h2>Lab Members</h2>
+<div class="grid">
+<div class="card">
+<h3>Gorakh D. Vispute</h3>
+<p>Bioinformatician</p>
+</div>
+</div>
+</section>
+
+<section id="contact">
+<h2>Contact</h2>
+<a class="btn" href="mailto:gorakhvispute@email.com">Email Me</a>
+<a class="btn" href="https://www.linkedin.com/in/gorakhvispute" target="_blank">LinkedIn</a>
+
+<div class="badge-base LI-profile-badge"
+data-locale="en_US"
+data-size="medium"
+data-theme="light"
+data-type="VERTICAL"
+data-vanity="gorakhvispute230702">
+<a class="badge-base__link LI-simple-link"
+href="https://in.linkedin.com/in/gorakhvispute230702">
+Gorakh Vispute
+</a>
 </div>
 
 </section>
 
+<footer>
+<p>© 2026 GDV Bioinformatics Lab</p>
+</footer>
+
 <script>
-let viewer;
-
-// 🔥 FIX: initialize AFTER layout is ready
-window.addEventListener("load", () => {
-
-    viewer = $3Dmol.createViewer("viewer", {
-        backgroundColor: "white"
-    });
-
-    loadStructure();
-
-    // 🔥 Important: force resize fix
-    setTimeout(() => {
-        viewer.resize();
-        viewer.render();
-    }, 300);
+// GitHub
+const username = "GorakhVispute";
+fetch(`https://api.github.com/users/${username}/repos`)
+.then(res => res.json())
+.then(data => {
+  const bioRepos = data.filter(r => r.description && r.description.toLowerCase().includes("bio"));
+  bioRepos.slice(0,3).forEach(repo => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `
+      <h3>${repo.name}</h3>
+      <p>${repo.description}</p>
+      <a class='btn' href='${repo.html_url}' target='_blank'>View</a>
+    `;
+    document.getElementById("repo-container").appendChild(div);
+  });
 });
 
-// LOAD STRUCTURE
+// 🔬 3D Viewer
+let viewer = $3Dmol.createViewer("viewer", { backgroundColor: "white" });
+
+// Load Structure
 function loadStructure() {
     let input = document.getElementById("inputBox").value.trim();
     if (!input) input = "3QTS";
@@ -149,40 +222,39 @@ function loadStructure() {
     }
 }
 
-// STYLE SWITCH
+// Change Style
 function changeStyle(style) {
     viewer.setStyle({}, {});
     viewer.removeAllSurfaces();
 
     if (style === "cartoon") {
-        viewer.setStyle({}, {cartoon:{color:'spectrum'}});
+        viewer.setStyle({}, {cartoon: {color: 'spectrum'}});
     } else if (style === "stick") {
-        viewer.setStyle({}, {stick:{}});
-    } else {
-        viewer.addSurface($3Dmol.SurfaceType.VDW, {opacity:0.7});
+        viewer.setStyle({}, {stick: {}});
+    } else if (style === "surface") {
+        viewer.addSurface($3Dmol.SurfaceType.VDW, {opacity: 0.7});
     }
 
     viewer.render();
 }
 
-// HIGHLIGHT RESIDUE
+// Highlight Residue
 function highlightResidue() {
     let res = parseInt(document.getElementById("residueInput").value);
 
-    if (isNaN(res)) return alert("Enter valid residue");
-
-    viewer.setStyle({}, {cartoon:{color:'spectrum'}});
-    viewer.setStyle({resi:res}, {stick:{color:"red"}});
-    viewer.zoomTo({resi:res});
+    viewer.setStyle({}, {cartoon: {color: 'spectrum'}});
+    viewer.setStyle({resi: res}, {stick: {color: "red"}});
+    viewer.zoomTo({resi: res});
     viewer.render();
 }
 
-// RESET
+// Reset
 function resetView() {
-    document.getElementById("inputBox").value = "";
-    document.getElementById("residueInput").value = "";
     loadStructure();
 }
+
+// Load default
+loadStructure();
 </script>
 
 </body>
