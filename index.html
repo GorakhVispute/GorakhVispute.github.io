@@ -2,230 +2,104 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>GDV Bioinformatics Studio</title>
-
-<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vispute Bioinformatics Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/molstar/build/viewer/molstar.js"></script>
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: radial-gradient(circle at top, #0b1020, #050714);
-    color: #e6edf3;
-}
-
-/* HEADER */
-header {
-    padding: 25px;
-    text-align: center;
-    background: rgba(2, 6, 23, 0.7);
-    backdrop-filter: blur(10px);
-}
-
-/* MAIN LAYOUT */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 30px;
-}
-
-/* LEFT PANEL */
-.panel {
-    width: 280px;
-    background: rgba(17, 24, 39, 0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    border: 1px solid rgba(255,255,255,0.05);
-}
-
-.panel input,
-.panel select,
-.panel button {
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-}
-
-.panel button {
-    background: #38bdf8;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-/* VIEWER */
-.viewer-box {
-    width: 900px;
-    height: 600px;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-    overflow: hidden;
-}
-
-/* SECTIONS */
-.section {
-    padding: 40px;
-    max-width: 1100px;
-    margin: auto;
-}
-
-.card {
-    background: rgba(17,24,39,0.7);
-    padding: 20px;
-    border-radius: 12px;
-    margin-top: 15px;
-}
-
-/* FOOTER */
-footer {
-    text-align: center;
-    padding: 20px;
-    background: rgba(2,6,23,0.7);
-    margin-top: 40px;
-}
+body { margin:0; font-family:'Inter',sans-serif; background:#0b1020; color:#e6edf3; }
+header { background:#020617; padding:30px; text-align:center; }
+nav { display:flex; justify-content:center; gap:20px; padding:10px; background:#020617; }
+nav a { color:#38bdf8; text-decoration:none; }
+section { max-width:1100px; margin:auto; padding:40px 20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+.card { background:#111827; padding:20px; border-radius:12px; }
+.tag { background:#1e293b; padding:4px 8px; margin:3px; display:inline-block; border-radius:6px; font-size:12px; }
+footer { text-align:center; padding:20px; background:#020617; }
+.btn { background:#38bdf8; color:#000; padding:8px 12px; text-decoration:none; border-radius:6px; display:inline-block; margin-top:10px; }
 </style>
 </head>
-
 <body>
 
 <header>
-<h1>GDV Bioinformatics Studio</h1>
-<p>Structural Biology • Drug Discovery • Computational Genomics</p>
+<h1>Vispute Bioinformatics Lab</h1>
+<p>Computational Drug Discovery | Structural Biology | Genomics</p>
 </header>
 
-<!-- 🔬 VIEWER DASHBOARD -->
-<div class="container">
+<nav>
+<a href="#research">Research</a>
+<a href="#github">GitHub</a>
+<a href="#visual">Structure Viewer</a>
+<a href="#team">Lab Members</a>
+<a href="#contact">Contact</a>
+</nav>
 
-<!-- Control Panel -->
-<div class="panel">
-<h3>Protein Controls</h3>
-
-<input id="inputBox" placeholder="PDB (3QTS) or UniProt (P69905)" />
-
-<button onclick="loadStructure()">Load Structure</button>
-
-<label>Representation</label>
-<select onchange="changeStyle(this.value)">
-<option value="cartoon">Cartoon</option>
-<option value="stick">Stick</option>
-<option value="surface">Surface</option>
-</select>
-
-<label>Residue Highlight</label>
-<input id="residueInput" placeholder="Residue number (e.g. 45)" />
-<button onclick="highlightResidue()">Highlight</button>
-
-<button onclick="resetView()">Reset</button>
-</div>
-
-<!-- Viewer -->
-<div class="viewer-box" id="viewer"></div>
-
-</div>
-
-<!-- RESEARCH -->
-<div class="section">
-<h2>Research Highlights</h2>
-
+<section id="research">
+<h2>Research Work</h2>
+<div class="grid">
 <div class="card">
-<b>Joubert Syndrome Protein Interaction Study</b><br>
-Docking: AutoDock Vina | Structure: 3QTS | Energy: -8.1 kcal/mol
+<h3>Naegleria fowleri Drug Target</h3>
+<p><b>Tools:</b> AutoDock Vina, PyMOL</p>
+<p><b>Binding Energy:</b> -8.1 kcal/mol</p>
+<p><b>PDB:</b> 3QTS</p>
 </div>
-
 <div class="card">
-<b>IL-5 Receptor Inhibition Study</b><br>
-Ligands: Curcumin, Piperlongumine, Vasicine | Avg Binding: -7.1 kcal/mol
+<h3>Phytochemicals vs IL-5</h3>
+<p><b>Tools:</b> AutoDock, ADMETlab</p>
+<p><b>Binding Energy:</b> -7.6 kcal/mol</p>
+<p><b>Ligand:</b> Curcumin</p>
 </div>
-
 </div>
+</section>
 
-<!-- FOOTER -->
+<section id="github">
+<h2>Selected GitHub Projects</h2>
+<div id="repo-container" class="grid"></div>
+</section>
+
+<section id="visual">
+<h2>Protein Structure Viewer</h2>
+<div id="viewer" style="width:100%; height:400px;"></div>
+</section>
+
+<section id="team">
+<h2>Lab Members</h2>
+<div class="grid">
+<div class="card">
+<h3>Gorakh Vispute</h3>
+<p>Principal Investigator (Computational Bioinformatics)</p>
+</div>
+</div>
+</section>
+
+<section id="contact">
+<h2>Contact</h2>
+<p>Email: <a href="mailto:gorakhvispute@email.com">gorakhvispute@email.com</a></p>
+<p>LinkedIn: <a href="https://www.linkedin.com/in/gorakhvispute" target="_blank">View Profile</a></p>
+</section>
+
 <footer>
-© 2026 GDV Bioinformatics Studio
+<p>© 2026 Vispute Bioinformatics Lab</p>
 </footer>
 
 <script>
-// Viewer
-let viewer = $3Dmol.createViewer("viewer", {
-    backgroundColor: "white"
+// GitHub Filtered Projects
+const username = "GorakhVispute";
+fetch(`https://api.github.com/users/${username}/repos`)
+.then(res => res.json())
+.then(data => {
+  const bioRepos = data.filter(r => r.description && r.description.toLowerCase().includes("bio"));
+  bioRepos.slice(0,3).forEach(repo => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `<h3>${repo.name}</h3><p>${repo.description}</p><a class='btn' href='${repo.html_url}' target='_blank'>View</a>`;
+    document.getElementById("repo-container").appendChild(div);
+  });
 });
 
-// Load structure
-function loadStructure() {
-    let input = document.getElementById("inputBox").value.trim();
-    if (!input) input = "3QTS";
-
-    viewer.clear();
-
-    if (input.length === 4) {
-        $3Dmol.download("pdb:" + input, viewer, {}, function() {
-            viewer.setStyle({}, {cartoon: {color: "spectrum"}});
-            viewer.setStyle({hetflag:true}, {stick:{}});
-            viewer.zoomTo();
-            viewer.render();
-        });
-    } else {
-        let url = `https://alphafold.ebi.ac.uk/files/AF-${input}-F1-model_v4.pdb`;
-
-        viewer.addModelFromUrl(url, "pdb", function() {
-            viewer.setStyle({}, {cartoon: {color: "confidence"}});
-            viewer.zoomTo();
-            viewer.render();
-        });
-    }
-}
-
-// Change style
-function changeStyle(style) {
-    viewer.setStyle({}, {});
-    viewer.removeAllSurfaces();
-
-    if (style === "cartoon") {
-        viewer.setStyle({}, {cartoon: {color: "spectrum"}});
-    }
-    if (style === "stick") {
-        viewer.setStyle({}, {stick:{}});
-    }
-    if (style === "surface") {
-        viewer.addSurface($3Dmol.SurfaceType.VDW, {opacity:0.8});
-    }
-
-    viewer.render();
-}
-
-// Highlight residue
-function highlightResidue() {
-    let res = parseInt(document.getElementById("residueInput").value);
-
-    viewer.setStyle({}, {cartoon:{color:"spectrum"}});
-    viewer.setStyle({resi:res}, {stick:{color:"red"}});
-    viewer.zoomTo({resi:res});
-    viewer.render();
-}
-
-// Reset
-function resetView() {
-    loadStructure();
-}
-
-// default load
-loadStructure();
+// Mol* Viewer
+const viewer = new molstar.Viewer('viewer', { layoutIsExpanded: false });
+viewer.loadPdb('3QTS');
 </script>
 
 </body>
